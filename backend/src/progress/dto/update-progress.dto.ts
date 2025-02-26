@@ -1,18 +1,27 @@
-/* eslint-disable prettier/prettier */
-import { IsNumber, IsBoolean, IsOptional, Min, Max } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateProgressDto {
-  @IsNumber()
-  @Min(0)
-  currentStep: number;
-
-  @IsBoolean()
   @IsOptional()
+  @IsNumber()
+  userId?: number;
+
+  @IsOptional()
+  @IsNumber()
+  currentStep?: number;
+
+  @IsOptional()
+  @IsBoolean()
   completed?: boolean;
 
-  @IsNumber()
   @IsOptional()
-  @Min(0)
-  @Max(100)
+  @IsNumber()
+  attemptsCount?: number;
+
+  @IsOptional()
+  @IsNumber()
   score?: number;
+
+  @IsOptional()
+  @IsString()
+  status: string;
 }

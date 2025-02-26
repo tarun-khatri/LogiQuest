@@ -1,8 +1,8 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Get, Param, Patch, Body, Post } from '@nestjs/common';
 import { ProgressService } from './progress.service';
-import { ProgressResponseDto, UpdateProgressDto } from './dto/progress.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { UpdateProgressDto } from './dto/progress.dto';
+import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('progress')
 @Controller('progress')
@@ -11,41 +11,33 @@ export class ProgressController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get progress by ID' })
-  @ApiParam({ name: 'id', type: 'number', description: 'The ID of the progress entry' })
-  @ApiResponse({ status: 200, description: 'Progress data retrieved successfully' })
-  @ApiResponse({ status: 404, description: 'Progress entry not found' })
-  findOne(@Param('id') id: string): Promise<ProgressResponseDto> {
-    return this.progressService.findOne(+id);
+  @ApiParam({ name: 'id', type: 'number', description: 'Progress entry ID' })
+  findOne(@Param('id') id: number) {
+    return this.progressService.findOne(id);
   }
 
-  @Get()
-  getUserProgress(@Body('userId') userId: string) {
+  @Get('user/:userId')
+  getUserProgress(@Param('userId') userId: number) {
     return this.progressService.getUserProgress(userId);
   }
 
-  @Post('chains/:id')
+  @Post('chains/:chainId')
   updateChainProgress(
-    @Body('userId') userId: string,
-    @Param('id') chainId: number,
-    @Body() body: { status: string },
+    @Body('userId') userId: number,
+    @Param('chainId') chainId: number,
+    @Body('status') status: string,
   ) {
-    return this.progressService.updateChainProgress(
-      userId,
-      chainId,
-      body.status,
-    );
+    return this.progressService.updateChainProgress(userId, chainId, status);
   }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Update progress by ID' })
-  @ApiParam({ name: 'id', type: 'number', description: 'The ID of the progress entry' })
-  @ApiResponse({ status: 200, description: 'Progress updated successfully' })
-  @ApiResponse({ status: 400, description: 'Invalid update request' })
-  @ApiResponse({ status: 404, description: 'Progress entry not found' })
   update(
-    @Param('id') id: string,
+    @Param('id') chainId: number,
+    status: number,
+    userId: string,
     @Body() updateProgressDto: UpdateProgressDto,
-  ): Promise<ProgressResponseDto> {
-    const userId = 1; // Replace this with actual user logic (e.g., from a JWT token or session)
-    return this.progressService.update(userId, +id, updateProgressDto);
+  ) {
+    return this.progressService.updateChainProgress(chainId, status, userId);
   }
 }

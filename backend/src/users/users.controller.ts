@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common"
-import { UsersService } from "./users.service"
-import { CreateUserDto } from "./dto/create-user.dto"
-import  { UpdateUserDto } from "./dto/update-user.dto"
-import { ApiTags, ApiOperation, ApiResponse, ApiParam } from "@nestjs/swagger"
-=======
 import {
   Controller,
   Get,
@@ -27,7 +20,6 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
->>>>>>> 9057e5ce5ed762a6ac1bdaad28e52e3a28237949
 
 @ApiTags('Users') // Groups this controller under "Users" in Swagger
 @Controller('users')

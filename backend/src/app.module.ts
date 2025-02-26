@@ -25,24 +25,29 @@ import { APP_GUARD } from '@nestjs/core';
       isGlobal: true,
 
       // Set the correct path for your environment file if needed
-      envFilePath: '.env',
+      envFilePath: '.env.development',
+      // envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
+      // validate: validateConfig, // Load environment variables
+      
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres', // Change this based on your database (mysql, sqlite, etc.)
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT) || 5433,
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'funbi',
-      database: process.env.DB_NAME || 'logiquest',
-      autoLoadEntities: true, // Auto-loads entities so you don't have to manually add them
-      synchronize: true,
-      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
-      validate: validateConfig, // Load environment variables
-    }),
-    ThrottlerModule.forRoot([{
-      ttl: 60000,
-      limit: 10,
-    }]),
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   host: process.env.DB_HOST,
+    //   port: Number(process.env.DB_PORT),
+    //   username: process.env.DB_USERNAME,
+    //   // password: process.env.DB_PASSWORD ,
+    //   password: String(process.env.DB_PASSWORD) || 'Ahmad@01',
+    //   database: process.env.DB_NAME,
+    //   autoLoadEntities: true,
+    //   synchronize: true,
+    // }),
+    
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
     UsersModule,
     PuzzlesModule,
     StepsModule,
@@ -54,7 +59,8 @@ import { APP_GUARD } from '@nestjs/core';
     DatabaseModule, // ✅ Correctly placed inside imports array
   ],
   controllers: [AppController],
-  providers: [AppService,
+  providers: [
+    AppService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

@@ -1,0 +1,13 @@
+#Updates an achievement by it's ID
+PATCH http://localhost:3000/achievements/1
+Content-Type: application/json 
+{
+    "id": " ",
+    "user": " ",
+    "type": "", 
+    "title": "",
+    "description": "",
+    "nftTokenId": "",
+    "unlockedAt": " "
+
+  }

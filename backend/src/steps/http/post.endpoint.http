@@ -1,0 +1,12 @@
+#Create a steps 
+
+POST http://localhost:3000/steps
+Content-Type: application/json
+
+{
+ "id": ,
+ "description": "",
+ "order": "",
+ "hints": "",
+ "puzzle": ""
+}

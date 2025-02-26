@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -22,9 +21,6 @@ export class User {
 
   @Column({ nullable: true })
   walletAddress: string;
-
-  @Column({nullable: true})
-  refreshToken: string
 
   @CreateDateColumn()
   createdAt: Date;

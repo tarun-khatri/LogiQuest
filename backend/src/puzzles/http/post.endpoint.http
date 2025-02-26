@@ -1,0 +1,13 @@
+#Post a new puzzle
+POST http://localhost:3000/puzzles
+Content-Type: application/json
+{
+  "id": ,
+  "title": "",
+  "description": "",
+  "difficulty": "",
+  "points": "",
+  "metadata": "",
+  "steps": "", 
+  
+}
